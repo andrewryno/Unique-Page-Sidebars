@@ -2,10 +2,11 @@
 Contributors: andrewryno
 Donate link: http://andrewryno.com/plugins/unique-page-sidebars/
 Tags: sidebars, dynamic sidebars, sidebar management, dynamic widgets, widgets per page, sidebars per page
+Requires at least: 3.0
 Tested up to: 3.3
 Stable tag: 0.1
 
-This plugin allows for the creation and management of widget sidebars on a per-page basis from a single dynamic_sidebar() call in your theme's sidebar.
+This plugin allows for the creation and management of widget sidebars on a per-page basis from a single dynamic_sidebar() call in your theme sidebar.
 
 == Description ==
 
@@ -35,11 +36,16 @@ In the above snippet of code, 'default-sidebar-id' is simply the ID for your def
 
 == Frequently Asked Questions ==
 
-
+None yet.
 
 == Screenshots ==
 
+1. The main screen where you add/edit/delete the sidebars.
+2. Quick screenshot showing the sidebar added to the Widgets screen.
 
+== Upgrade Notice ==
+
+No upgrade notices yet.
 
 == Changelog ==
 
