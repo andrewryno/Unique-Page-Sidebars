@@ -4,7 +4,7 @@ Plugin Name: Unique Page Sidebars
 Plugin URI: http://andrewryno.com/plugins/unique-page-sidebars/
 Description: Allows for the creation of sidebars on a per-page basis all from a single dynamic_sidebar() call from where they should appear.
 Author: Andrew Ryno
-Version: 0.1
+Version: 0.3
 Author URI: http://andrewryno.com/
 */
 
@@ -18,12 +18,12 @@ add_action( 'admin_menu', 'ups_options_add_page' );
 
 /**
  * Displays the sidebar which is attached to the page being viewed.
- * 
+ *
  * @since Unique Page Sidebars 0.1
  */
 function ups_display_sidebar( $default_sidebar ) {
 	global $post;
-	
+
 	$sidebars = get_option( 'ups_sidebars' );
 	foreach ( $sidebars as $id => $sidebar ) {
 		if ( array_key_exists( 'pages', $sidebar ) ) {
@@ -37,13 +37,13 @@ function ups_display_sidebar( $default_sidebar ) {
 			}
 		}
 	}
-	
+
 	return $default_sidebar;
 }
 
 /**
  * Add the options page to the "Appearance" admin menu
- * 
+ *
  * @since Unique Page Sidebars 0.1
  */
 function ups_options_add_page() {
@@ -52,12 +52,12 @@ function ups_options_add_page() {
 
 /**
  * Registers all sidebars for use on the front-end and Widgets page
- * 
+ *
  * @since Unique Page Sidebars 0.1
  */
 function ups_options_init() {
 	$sidebars = get_option( 'ups_sidebars' );
-	
+
 	if ( is_array( $sidebars ) ) {
 		foreach ( (array) $sidebars as $id => $sidebar ) {
 			unset( $sidebar['pages'] );
@@ -69,17 +69,17 @@ function ups_options_init() {
 
 /**
  * Adds the metaboxes to the main options page for the sidebars in the database.
- * 
+ *
  * @since Unique Page Sidebars 0.1
  */
 function ups_options_admin_init() {
 	wp_enqueue_script('common');
 	wp_enqueue_script('wp-lists');
 	wp_enqueue_script('postbox');
-	
+
 	// Register setting to store all the sidebar options in the *_options table
 	register_setting( 'ups_sidebars_options', 'ups_sidebars', 'ups_sidebars_validate' );
-	
+
 	$sidebars = get_option( 'ups_sidebars' );
 	if ( is_array( $sidebars ) && count ( $sidebars ) > 0 ) {
 		foreach ( $sidebars as $id => $sidebar ) {
@@ -95,7 +95,7 @@ function ups_options_admin_init() {
 					'sidebar' => $sidebar
 				)
 			);
-		
+
 			unset( $sidebar['pages'] );
 			$sidebar['id'] = esc_attr( $id );
 			register_sidebar( $sidebar );
@@ -103,7 +103,7 @@ function ups_options_admin_init() {
 	} else {
 		add_meta_box( 'ups-sidebar-no-sidebars', 'No sidebars', 'ups_sidebar_no_sidebars', 'ups_sidebars', 'normal', 'default' );
 	}
-	
+
 	// Sidebar metaboxes
 	add_meta_box( 'ups-sidebar-add-new-sidebar', 'Add New Sidebar', 'ups_sidebar_add_new_sidebar', 'ups_sidebars', 'side', 'default' );
 	add_meta_box( 'ups-sidebar-about-the-plugin', 'About the Plugin', 'ups_sidebar_about_the_plugin', 'ups_sidebars', 'side', 'default' );
@@ -117,7 +117,7 @@ function ups_sidebar_no_sidebars() {
 
 /**
  * Callback function which creates the theme page and adds a spot for the metaboxes
- * 
+ *
  * @since Unique Page Sidebars 0.1
  */
 function ups_sidebars_do_page() {
@@ -148,18 +148,18 @@ function ups_sidebars_do_page() {
 
 /**
  * Callback function which adds the content of the metaboxes for each sidebar
- * 
+ *
  * @since Unique Page Sidebars 0.1
  */
 function ups_sidebar_do_meta_box( $post, $metabox ) {
 	$sidebars = get_option( 'ups_sidebars' );
 	$sidebar_id = esc_attr( $metabox['args']['id'] );
 	$sidebar = $sidebars[$sidebar_id];
-	
+
 	if ( ! isset( $sidebar['pages'] ) ) {
 		$sidebar['pages'] = array();
 	}
-	
+
 	$options_fields = array(
 		'name' => 'Name',
 		'description' => 'Description',
@@ -169,42 +169,70 @@ function ups_sidebar_do_meta_box( $post, $metabox ) {
 		'after_widget' => 'After Widget',
 		'children' => 'Child Behavior'
 	);
-	
-	$get_posts = new WP_Query;
-	$posts = $get_posts->query( array(
-		'offset' => 0,
-		'order' => 'ASC',
-		'orderby' => 'title',
-		'posts_per_page' => -1,
-		'post_type' => 'page',
-		'suppress_filters' => true,
-		'update_post_term_cache' => false,
-		'update_post_meta_cache' => false
-	) );
+
+	$post_types = get_post_types( array( '_builtin' => false ), 'objects' );
+	$post_types = array_merge( $post_types, array( 'page' => get_post_type_object( 'page' ), 'post' => get_post_type_object( 'post' ) ) );
 	?>
-	<div class="wp-tab-wrapper" style="float: left; width: 25%;">
+	<div style="float: left; width: 25%;">
 		<ul class="wp-tab-bar">
-			<li class="wp-tab-active">All Pages</li>
-		</ul>
-		<div class="wp-tab-panel">
-			<ul id="pagechecklist" class="categorychecklist form-no-clear" style="margin-top:0">
-				<?php foreach ( $posts as $post ) : ?>
-				<li>
-					<label>
-					<?php
-					$checked = '';
-					if ( array_key_exists( $post->ID, $sidebar['pages'] ) ) {
-						$checked = ' checked="checked"';
-					}
-					?>
-					<input type="checkbox" class="menu-item-checkbox" name="ups_sidebars[<?php echo esc_attr( $sidebar_id ); ?>][pages][<?php echo esc_attr( $post->ID ); ?>]" value="<?php echo esc_attr( $post->post_title ); ?>"<?php echo $checked; ?> />
-					<?php echo esc_html( $post->post_title ); ?>
-					</label>
+			<?php $i = 0; foreach ( $post_types as $post_type ) : ?>
+				<li <?php echo ($i == 0) ? 'class="wp-tab-active"' : ''; ?>>
+					<a href="#post-type-<?php echo esc_attr( $post_type->name ); ?>">
+						<?php echo esc_html( $post_type->labels->name ); ?>
+					</a>
 				</li>
-				<?php endforeach; ?>
-			</ul>
-		</div>
+			<?php ++$i; endforeach; ?>
+		</ul>
+		<?php $i = 0; foreach ( $post_types as $post_type ) : ?>
+			<div class="wp-tab-panel" id="post-type-<?php echo esc_attr( $post_type->name ); ?>" <?php echo ($i > 0) ? 'style="display: none;"' : ''; ?>>
+				<?php
+				$wpquery = new WP_Query;
+				$items = $wpquery->query( array(
+					'offset' => 0,
+					'order' => 'ASC',
+					'orderby' => 'title',
+					'posts_per_page' => -1,
+					'post_type' => $post_type->name,
+					'suppress_filters' => true,
+					'update_post_term_cache' => false,
+					'update_post_meta_cache' => false,
+					'no_found_posts' => true,
+				) );
+				?>
+				<ul id="<?php echo esc_attr( $post_type->name ); ?>checklist" class="categorychecklist form-no-clear">
+					<?php foreach ( $items as $item ) : ?>
+					<li>
+						<label>
+						<?php $name = 'ups_sidebars[' . $sidebar_id . '][pages][' . $item->ID . ']'; ?>
+						<input type="checkbox" class="menu-item-checkbox" name="<?php echo esc_attr( $name ); ?>" value="<?php echo esc_attr( $item->post_title ); ?>" <?php echo array_key_exists( $item->ID, $sidebar['pages'] ) ? 'checked="checked"' : ''; ?> />
+						<?php echo esc_html( $item->post_title ); ?>
+						</label>
+					</li>
+					<?php endforeach; ?>
+				</ul>
+			</div>
+		<?php ++$i; endforeach; ?>
 	</div>
+	<script>
+	jQuery(document).ready( function($) {
+		// wp tabs
+		$('.wp-tab-bar a').click(function(event){
+			event.preventDefault();
+			// Limit effect to the container element.
+			var context = $(this).parents('.wp-tab-bar').first().parent();
+			$('.wp-tab-bar li', context).removeClass('wp-tab-active');
+			$(this).parents('li').first().addClass('wp-tab-active');
+			$('.wp-tab-panel', context).hide();
+			$( $(this).attr('href'), context ).show();
+		});
+		// Make setting wp-tab-active optional.
+		$('.wp-tab-bar').each(function(){
+			if ( $('.wp-tab-active', this).length )
+				$('.wp-tab-active', this).click();
+			else $('a', this).first().click();
+		});
+	});
+	</script>
 	<div style="float: right; width: 70%;">
 		<table class="form-table">
 			<?php foreach ( $options_fields as $id => $label ) : ?>
@@ -239,7 +267,7 @@ function ups_sidebar_do_meta_box( $post, $metabox ) {
 
 /**
  * Validates and handles all the post data (adding, updating, deleting sidebars)
- * 
+ *
  * @since Unique Page Sidebars 0.1
  */
 function ups_sidebars_validate( $input ) {
@@ -260,7 +288,7 @@ function ups_sidebars_validate( $input ) {
 		}
 		return $sidebars;
 	}
-	
+
 	if ( isset( $input['delete'] ) ) {
 		foreach ( (array) $input['delete'] as $delete_id ) {
 			unset( $input[$delete_id] );
@@ -268,13 +296,13 @@ function ups_sidebars_validate( $input ) {
 		unset( $input['delete'] );
 		return $input;
 	}
-	
+
 	return $input;
 }
 
 /**
  * Handles the content of the metabox which allows adding new sidebars
- * 
+ *
  * @since Unique Page Sidebars 0.1
  */
 function ups_sidebar_add_new_sidebar() {
@@ -298,7 +326,7 @@ function ups_sidebar_add_new_sidebar() {
 
 /**
  * Handles the content of the metabox that describes the plugin
- * 
+ *
  * @since Unique Page Sidebars 0.1
  */
 function ups_sidebar_about_the_plugin() {
