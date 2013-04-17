@@ -163,10 +163,6 @@ class Unique_Page_Sidebars {
 		$sidebar_id = esc_attr( $metabox['args']['id'] );
 		$sidebar = $sidebars[$sidebar_id];
 
-		if ( ! isset( $sidebar['pages'] ) ) {
-			$sidebar['pages'] = array();
-		}
-
 		$options_fields = array(
 			'name' => 'Name',
 			'description' => 'Description',
@@ -193,8 +189,7 @@ class Unique_Page_Sidebars {
 			<?php $i = 0; foreach ( $post_types as $post_type ) : ?>
 				<div class="wp-tab-panel" id="post-type-<?php echo esc_attr( $post_type->name ); ?>" <?php echo ($i > 0) ? 'style="display: none;"' : ''; ?>>
 					<?php
-					$wpquery = new WP_Query;
-					$items = $wpquery->query( array(
+					$items = new WP_Query( array(
 						'offset' => 0,
 						'order' => 'ASC',
 						'orderby' => 'title',
@@ -205,24 +200,25 @@ class Unique_Page_Sidebars {
 						'update_post_meta_cache' => false,
 						'no_found_posts' => true,
 					) );
-					?>
-					<ul id="<?php echo esc_attr( $post_type->name ); ?>checklist" class="categorychecklist form-no-clear">
-						<?php foreach ( $items as $item ) : ?>
-						<li>
-							<label>
-							<?php $name = 'ups_sidebars[' . $sidebar_id . '][pages][' . $item->ID . ']'; ?>
-							<input type="checkbox" class="menu-item-checkbox" name="<?php echo esc_attr( $name ); ?>" value="<?php echo esc_attr( $item->post_title ); ?>" <?php echo array_key_exists( $item->ID, $sidebar['pages'] ) ? 'checked="checked"' : ''; ?> />
-							<?php echo esc_html( $item->post_title ); ?>
-							</label>
-						</li>
-						<?php endforeach; ?>
-					</ul>
+					if ( $items->have_posts() ) : ?>
+						<ul id="<?php echo esc_attr( $post_type->name ); ?>checklist" class="categorychecklist form-no-clear">
+							<?php while ( $items->have_posts() ) : $items->the_post(); ?>
+								<li>
+									<label>
+									<?php $name = 'ups_sidebars[' . $sidebar_id . '][' . $post_type->name . '][' . get_the_ID() . ']'; ?>
+									<input type="checkbox" class="menu-item-checkbox" name="<?php echo esc_attr( $name ); ?>" value="<?php echo esc_attr( get_the_title( get_the_ID() ) ); ?>" <?php echo ( isset( $sidebar[$post_type->name] ) && array_key_exists( get_the_ID(), $sidebar[$post_type->name] ) ) ? 'checked="checked"' : ''; ?> />
+									<?php echo esc_html( get_the_title( get_the_ID() ) ); ?>
+									</label>
+								</li>
+							<?php endwhile; ?>
+						</ul>
+					<?php endif; ?>
 				</div>
 			<?php ++$i; endforeach; ?>
 		</div>
 		<script>
 		jQuery(document).ready( function($) {
-			// wp tabs
+			// WP tabs
 			$('.wp-tab-bar a').click(function(event){
 				event.preventDefault();
 				// Limit effect to the container element.
@@ -232,6 +228,7 @@ class Unique_Page_Sidebars {
 				$('.wp-tab-panel', context).hide();
 				$( $(this).attr('href'), context ).show();
 			});
+
 			// Make setting wp-tab-active optional.
 			$('.wp-tab-bar').each(function(){
 				if ( $('.wp-tab-active', this).length )
