@@ -136,6 +136,7 @@ class Unique_Page_Sidebars {
 			<?php if ( false !== $_REQUEST['settings-updated'] ) : ?>
 			<div class="updated fade"><p><strong>Sidebar settings saved.</strong> You can now go manage the <a href="<?php echo get_admin_url(); ?>widgets.php">widgets</a> for your sidebars.</p></div>
 			<?php endif; ?>
+			<?php var_dump( array_pop( get_option( 'ups_sidebars' ) ) ); ?>
 			<div id="poststuff" class="metabox-holder has-right-sidebar">
 				<div id="post-body" class="has-sidebar">
 					<div id="post-body-content" class="has-sidebar-content">
@@ -205,8 +206,8 @@ class Unique_Page_Sidebars {
 							<?php while ( $items->have_posts() ) : $items->the_post(); ?>
 								<li>
 									<label>
-									<?php $name = 'ups_sidebars[' . $sidebar_id . '][' . $post_type->name . '][' . get_the_ID() . ']'; ?>
-									<input type="checkbox" class="menu-item-checkbox" name="<?php echo esc_attr( $name ); ?>" value="<?php echo esc_attr( get_the_title( get_the_ID() ) ); ?>" <?php echo ( isset( $sidebar[$post_type->name] ) && array_key_exists( get_the_ID(), $sidebar[$post_type->name] ) ) ? 'checked="checked"' : ''; ?> />
+									<?php $name = 'ups_sidebars[' . $sidebar_id . '][locations][' . $post_type->name . '][' . get_the_ID() . ']'; ?>
+									<input type="checkbox" class="menu-item-checkbox" name="<?php echo esc_attr( $name ); ?>" value="<?php echo esc_attr( get_the_title( get_the_ID() ) ); ?>" <?php echo ( isset( $sidebar['locations'][$post_type->name] ) && array_key_exists( get_the_ID(), $sidebar['locations'][$post_type->name] ) ) ? 'checked="checked"' : ''; ?> />
 									<?php echo esc_html( get_the_title( get_the_ID() ) ); ?>
 									</label>
 								</li>
@@ -277,8 +278,24 @@ class Unique_Page_Sidebars {
 	public function validate( $input ) {
 		if ( isset( $input['add_sidebar'] ) ) {
 			$sidebars = get_option( 'ups_sidebars' );
-			if ( '' != $input['add_sidebar'] ) {
-				$sidebar_num = count( $sidebars ) + 1;
+			if ( ! empty( $input['add_sidebar'] ) ) {
+				// Get the last sidebar ID from the database
+				$sidebar_num = get_option( 'ups_sidebars_last_id', -1 );
+				if ( $sidebar_num < 0 ) {
+					// Backward compatibility for existing sidebars
+					if ( is_array( $sidebars ) ) {
+						$last_id = end( array_keys( $sidebars ) );
+						$last_num = end( explode( '-', $last_id ) );
+						$sidebar_num = intval( $last_num );
+					} else {
+						$sidebar_num = 0;
+					}
+				}
+
+				// Increment the sidebar number and save it
+				$sidebar_num += 1;
+				update_option( 'ups_sidebars_last_id', $sidebar_num );
+
 				$sidebars['ups-sidebar-' . $sidebar_num] = array(
 					'name' => esc_html( $input['add_sidebar'] ),
 					'description' => '',
@@ -286,8 +303,8 @@ class Unique_Page_Sidebars {
 					'after_title' => '',
 					'before_widget' => '',
 					'after_widget' => '',
-					'pages' => array(),
-					'children' => 'off'
+					'children' => 'off',
+					'locations' => array()
 				);
 			}
 			return $sidebars;
