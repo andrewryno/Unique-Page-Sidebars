@@ -48,13 +48,21 @@ class Unique_Page_Sidebars {
 
 		$sidebars = get_option( 'ups_sidebars' );
 		foreach ( $sidebars as $id => $sidebar ) {
-			if ( array_key_exists( 'pages', $sidebar ) ) {
-				if ( array_key_exists( 'children', $sidebar ) && $sidebar['children'] == 'on' ) {
+			// Make sure this sidebar has locations registerd
+			if ( ! isset( $sidebar['locations'] ) )
+				continue;
+
+			foreach ( $sidebar['locations'] as $location => $ids ) {
+				// Check to see if child posts should be displayed
+				if ( isset( $sidebar['children'] ) && $sidebar['children'] == 'on' ) {
 					$child = array_key_exists( $post->post_parent, $sidebar['pages'] );
 				} else {
 					$child = false;
 				}
-				if ( array_key_exists( $post->ID, $sidebar['pages'] ) || $child ) {
+
+				// If this post is set to be displayed (or it's a child of one)
+				// then return the ID of the sidebar it is in.
+				if ( in_array( $post->ID, $ids ) || $child ) {
 					return $id;
 				}
 			}
