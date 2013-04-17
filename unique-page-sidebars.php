@@ -32,7 +32,8 @@ class Unique_Page_Sidebars {
 
 		if ( is_array( $sidebars ) ) {
 			foreach ( (array) $sidebars as $id => $sidebar ) {
-				unset( $sidebar['pages'] );
+				unset( $sidebar['pages'] ); // Backwards compat only
+				unset( $sidebar['location'] );
 				$sidebar['id'] = $id;
 				register_sidebar( $sidebar );
 			}
