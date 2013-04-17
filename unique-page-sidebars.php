@@ -22,8 +22,6 @@ class Unique_Page_Sidebars {
 
 	/**
 	 * Registers all sidebars for use on the front-end and Widgets page
-	 *
-	 * @since Unique Page Sidebars 0.1
 	 */
 	public function init() {
 		$sidebars = get_option( 'ups_sidebars' );
@@ -39,8 +37,6 @@ class Unique_Page_Sidebars {
 
 	/**
 	 * Displays the sidebar which is attached to the page being viewed.
-	 *
-	 * @since Unique Page Sidebars 0.1
 	 */
 	public function display_sidebar( $default_sidebar ) {
 		global $post;
@@ -63,9 +59,7 @@ class Unique_Page_Sidebars {
 	}
 
 	/**
-	 * Add the options page to the "Appearance" admin menu
-	 *
-	 * @since Unique Page Sidebars 0.1
+	 * Add the options page to the "Appearance" admin menu.
 	 */
 	public function add_page() {
 		add_theme_page( 'Manage Sidebars', 'Manage Sidebars', 'edit_theme_options', 'ups_sidebars', array( $this, 'admin_page' ) );
@@ -73,8 +67,6 @@ class Unique_Page_Sidebars {
 
 	/**
 	 * Adds the metaboxes to the main options page for the sidebars in the database.
-	 *
-	 * @since Unique Page Sidebars 0.1
 	 */
 	public function admin_init() {
 		wp_enqueue_script( 'common' );
@@ -115,17 +107,13 @@ class Unique_Page_Sidebars {
 
 	/**
 	 * Outputs error message when no sidebars have been added.
-	 *
-	 * @return string
 	 */
 	public function no_sidebars() {
 		echo '<p>You haven&rsquo;t added any sidebars yet. Add one using the form on the right hand side!</p>';
 	}
 
 	/**
-	 * Callback function which creates the theme page and adds a spot for the metaboxes
-	 *
-	 * @since Unique Page Sidebars 0.1
+	 * Callback function which creates the theme page and adds a spot for the metaboxes.
 	 */
 	public function admin_page() {
 		if ( ! isset( $_REQUEST['settings-updated'] ) )
@@ -155,9 +143,7 @@ class Unique_Page_Sidebars {
 	}
 
 	/**
-	 * Callback function which adds the content of the metaboxes for each sidebar
-	 *
-	 * @since Unique Page Sidebars 0.1
+	 * Callback function which adds the content of the metaboxes for each sidebar.
 	 */
 	public function meta_box( $post, $metabox ) {
 		$sidebars = get_option( 'ups_sidebars' );
@@ -271,9 +257,7 @@ class Unique_Page_Sidebars {
 	}
 
 	/**
-	 * Validates and handles all the post data (adding, updating, deleting sidebars)
-	 *
-	 * @since Unique Page Sidebars 0.1
+	 * Validates and handles all the post data (adding, updating, deleting sidebars).
 	 */
 	public function validate( $input ) {
 		if ( isset( $input['add_sidebar'] ) ) {
@@ -322,9 +306,7 @@ class Unique_Page_Sidebars {
 	}
 
 	/**
-	 * Handles the content of the metabox which allows adding new sidebars
-	 *
-	 * @since Unique Page Sidebars 0.1
+	 * Handles the content of the metabox which allows adding new sidebars.
 	 */
 	public function new_sidebar() {
 		?>
@@ -346,11 +328,9 @@ class Unique_Page_Sidebars {
 	}
 
 	/**
-	 * Handles the content of the metabox that describes the plugin
-	 *
-	 * @since Unique Page Sidebars 0.1
+	 * Handles the content of the metabox that describes the plugin.
 	 */
-	function about() {
+	public function about() {
 		?>
 		<p>This plugin was developed by <a href="http://andrewryno.com/">Andrew Ryno</a>, a WordPress developer based in Phoenix, AZ who never found a decent solution to having sidebars on different pages.</p>
 		<p>Like the plugin? Think it could be improved? Feel free to contribute over at <a href="http://github.com/andrewryno">GitHub</a>!</p>
