@@ -14,8 +14,12 @@ class Unique_Page_Sidebars {
 	 * Register all hooks.
 	 */
 	public function __construct() {
-		add_filter( 'ups_sidebar', array( $this, 'display_sidebar' ) );
+		// The following two hooks need to be called on each request, one to
+		// register the sidebars and another to display them.
 		add_action( 'init', array( $this, 'init' ) );
+		add_filter( 'ups_sidebar', array( $this, 'display_sidebar' ) );
+
+		// Everything else can be loaded in the admin only (options pages).
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 		add_action( 'admin_menu', array( $this, 'add_page' ) );
 	}
