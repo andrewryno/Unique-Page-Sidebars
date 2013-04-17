@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Unique Page Sidebars
-Plugin URI: http://andrewryno.com/plugins/unique-page-sidebars/
+Plugin URI: http://andrewryno.com/plugins/page-specific-sidebars-widgets/
 Description: Allows for the creation of sidebars on a per-page basis all from a single dynamic_sidebar() call from where they should appear.
 Author: Andrew Ryno
 Version: 0.3

@@ -1,6 +1,6 @@
 === Unique Page Sidebars ===
 Contributors: andrewryno
-Donate link: http://andrewryno.com/plugins/unique-page-sidebars/
+Donate link: http://andrewryno.com/plugins/page-specific-sidebars-widgets/
 Tags: sidebars, dynamic sidebars, sidebar management, dynamic widgets, widgets per page, sidebars per page
 Requires at least: 3.0
 Tested up to: 3.3
