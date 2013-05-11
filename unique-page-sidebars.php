@@ -274,37 +274,7 @@ class Unique_Page_Sidebars {
 	 */
 	public function validate( $input ) {
 		if ( isset( $input['add_sidebar'] ) ) {
-			$sidebars = get_option( 'ups_sidebars' );
-			if ( ! empty( $input['add_sidebar'] ) ) {
-				// Get the last sidebar ID from the database
-				$sidebar_num = get_option( 'ups_sidebars_last_id', -1 );
-				if ( $sidebar_num < 0 ) {
-					// Backward compatibility for existing sidebars
-					if ( is_array( $sidebars ) ) {
-						$last_id = end( array_keys( $sidebars ) );
-						$last_num = end( explode( '-', $last_id ) );
-						$sidebar_num = intval( $last_num );
-					} else {
-						$sidebar_num = 0;
-					}
-				}
-
-				// Increment the sidebar number and save it
-				$sidebar_num += 1;
-				update_option( 'ups_sidebars_last_id', $sidebar_num );
-
-				$sidebars['ups-sidebar-' . $sidebar_num] = array(
-					'name' => esc_html( $input['add_sidebar'] ),
-					'description' => '',
-					'before_title' => '',
-					'after_title' => '',
-					'before_widget' => '',
-					'after_widget' => '',
-					'children' => 'off',
-					'locations' => array()
-				);
-			}
-			return $sidebars;
+			$input = $this->add_sidebar();
 		}
 
 		if ( isset( $input['delete'] ) ) {
@@ -316,6 +286,49 @@ class Unique_Page_Sidebars {
 		}
 
 		return $input;
+	}
+
+	/**
+	 * Adds a sidebar to the database.
+	 *
+	 * @param  string $name
+	 * @return array
+	 */
+	public function add_sidebar( $name ) {
+		$sidebars = get_option( 'ups_sidebars' );
+		if ( empty( $name ) ) {
+			return false;
+		}
+
+		// Get the last sidebar ID from the database
+		$sidebar_num = get_option( 'ups_sidebars_last_id', -1 );
+		if ( $sidebar_num < 0 ) {
+			// Backward compatibility for existing sidebars
+			if ( is_array( $sidebars ) ) {
+				$last_id = end( array_keys( $sidebars ) );
+				$last_num = end( explode( '-', $last_id ) );
+				$sidebar_num = intval( $last_num );
+			} else {
+				$sidebar_num = 0;
+			}
+		}
+
+		// Increment the sidebar number and save it
+		$sidebar_num += 1;
+		update_option( 'ups_sidebars_last_id', $sidebar_num );
+
+		$sidebars['ups-sidebar-' . $sidebar_num] = array(
+			'name' => esc_html( $name ),
+			'description' => '',
+			'before_title' => '',
+			'after_title' => '',
+			'before_widget' => '',
+			'after_widget' => '',
+			'children' => 'off',
+			'locations' => array()
+		);
+
+		return $sidebars;
 	}
 
 	/**
