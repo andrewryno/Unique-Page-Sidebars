@@ -353,4 +353,4 @@ class Unique_Page_Sidebars {
 
 }
 
-$unique_page_sidebars = new Unique_Page_Sidebars;
+$GLOBALS['unique_page_sidebars'] = new Unique_Page_Sidebars;
