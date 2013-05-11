@@ -3,8 +3,8 @@ Contributors: andrewryno
 Donate link: http://andrewryno.com/plugins/page-specific-sidebars-widgets/
 Tags: sidebars, dynamic sidebars, sidebar management, dynamic widgets, widgets per page, sidebars per page
 Requires at least: 3.0
-Tested up to: 3.3
-Stable tag: 0.1
+Tested up to: 3.5.1
+Stable tag: 0.2
 
 This plugin allows for the creation and management of widget sidebars on a per-page basis from a single dynamic_sidebar() call in your theme sidebar.
 
