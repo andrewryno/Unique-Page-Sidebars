@@ -38,7 +38,7 @@ To install, download the .zip, unpack it and upload to your WordPress installati
 
 In your theme, all you need to add is the following line where you would like the dynamic sidebar to show up:
 
-`<?php dynamic_sidebar( apply_filters( 'ryno_sidebar', 'default-sidebar-id' ) ); ?>`
+`<?php dynamic_sidebar( apply_filters( 'ups_sidebar', 'default-sidebar-id' ) ); ?>`
 
 In the above snippet of code, 'default-sidebar-id' is simply the ID for your default sidebar which you should define in your functions.php file using `register_sidebar()`.
 
