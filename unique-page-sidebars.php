@@ -146,7 +146,7 @@ class Unique_Page_Sidebars {
 			$_REQUEST['settings-updated'] = false;
 		?>
 		<div class="wrap">
-			<?php screen_icon(); ?><h2>Manage Sidebars</h2>
+			<?php screen_icon(); ?><h2><?php _e('Manage Sidebars', self::TEXT_DOMAIN) ?></h2>
 			<?php if ( false !== $_REQUEST['settings-updated'] ) : ?>
 			<div class="updated fade"><p><strong><?php _e('Sidebar settings saved.', self::TEXT_DOMAIN) ?></strong> <?php printf( __('You can now go manage the <a href="%swidgets.php">widgets</a> for your sidebars.', self::TEXT_DOMAIN), get_admin_url()) ?></p></div>
 			<?php endif; ?>
