@@ -1,0 +1,120 @@
+# Copyright (C) 2013 Unique Page Sidebars
+# This file is distributed under the same license as the Unique Page Sidebars package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Unique Page Sidebars 0.3\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/unique-page-sidebars\n"
+"POT-Creation-Date: 2013-06-02 13:54:17+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2013-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: unique-page-sidebars.php:86 unique-page-sidebars.php:87
+msgid "Manage Sidebars"
+msgstr ""
+
+#: unique-page-sidebars.php:126
+msgid "No sidebars"
+msgstr ""
+
+#: unique-page-sidebars.php:130
+msgid "Add New Sidebar"
+msgstr ""
+
+#: unique-page-sidebars.php:131
+msgid "About the Plugin"
+msgstr ""
+
+#: unique-page-sidebars.php:151
+msgid "Sidebar settings saved."
+msgstr ""
+
+#: unique-page-sidebars.php:151
+msgid ""
+"You can now go manage the <a href=\"%swidgets.php\">widgets</a> for your "
+"sidebars."
+msgstr ""
+
+#: unique-page-sidebars.php:180
+msgid "Description"
+msgstr ""
+
+#: unique-page-sidebars.php:181
+msgid "Before Title"
+msgstr ""
+
+#: unique-page-sidebars.php:182
+msgid "After Title"
+msgstr ""
+
+#: unique-page-sidebars.php:183
+msgid "Before Widget"
+msgstr ""
+
+#: unique-page-sidebars.php:184
+msgid "After Widget"
+msgstr ""
+
+#: unique-page-sidebars.php:185
+msgid "Child Behavior"
+msgstr ""
+
+#: unique-page-sidebars.php:267
+msgid "Set page children to use the parent page sidebar by default?"
+msgstr ""
+
+#: unique-page-sidebars.php:278
+msgid "Save all sidebars"
+msgstr ""
+
+#: unique-page-sidebars.php:279
+msgid "Delete this sidebar?"
+msgstr ""
+
+#: unique-page-sidebars.php:362
+msgid "Add Sidebar"
+msgstr ""
+
+#: unique-page-sidebars.php:373
+msgid ""
+"This plugin was developed by <a href=\"http://andrewryno.com/\">Andrew Ryno</"
+"a>, a WordPress developer based in Phoenix, AZ who never found a decent "
+"solution to having sidebars on different pages."
+msgstr ""
+
+#: unique-page-sidebars.php:374
+msgid ""
+"Like the plugin? Think it could be improved? Feel free to contribute over at "
+"<a href=\"http://github.com/andrewryno\">GitHub</a>!"
+msgstr ""
+
+#: unique-page-sidebars.php:375
+msgid ""
+"If you have any other feedback or need help, go ahead and <a href=\"http://"
+"andrewryno.com/plugins/unique-page-sidebars/\">leave a comment</a>."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Unique Page Sidebars"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://andrewryno.com/plugins/page-specific-sidebars-widgets/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Allows for the creation of sidebars on a per-page basis all from a single "
+"dynamic_sidebar() call from where they should appear."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Andrew Ryno"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://andrewryno.com/"
+msgstr ""
