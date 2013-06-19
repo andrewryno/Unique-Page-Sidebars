@@ -2,6 +2,8 @@
 /*
 Plugin Name: Unique Page Sidebars
 Plugin URI: http://andrewryno.com/plugins/page-specific-sidebars-widgets/
+Text Domain: Unique_Page_Sidebars
+Domain Path: /lang
 Description: Allows for the creation of sidebars on a per-page basis all from a single dynamic_sidebar() call from where they should appear.
 Author: Andrew Ryno
 Version: 0.3
@@ -9,11 +11,16 @@ Author URI: http://andrewryno.com/
 */
 
 class Unique_Page_Sidebars {
+	const LANG_DIR = '/lang/'; // Defaut lang dirctory
+    const TEXT_DOMAIN = 'unique-page-sidebars';
 
 	/**
 	 * Register all hooks.
 	 */
 	public function __construct() {
+
+		load_plugin_textdomain(self::TEXT_DOMAIN,false, dirname(plugin_basename( __FILE__ ) ) . self::LANG_DIR );
+
 		// The following two hooks need to be called on each request, one to
 		// register the sidebars and another to display them.
 		add_action( 'init', array( $this, 'init' ) );
@@ -75,7 +82,13 @@ class Unique_Page_Sidebars {
 	 * Add the options page to the "Appearance" admin menu.
 	 */
 	public function add_page() {
-		add_theme_page( 'Manage Sidebars', 'Manage Sidebars', 'edit_theme_options', 'ups_sidebars', array( $this, 'admin_page' ) );
+		add_theme_page(
+				__('Manage Sidebars', self::TEXT_DOMAIN),
+				__('Manage Sidebars', self::TEXT_DOMAIN),
+				'edit_theme_options',
+				'ups_sidebars',
+				array( $this, 'admin_page' )
+			);
 	}
 
 	/**
@@ -110,19 +123,19 @@ class Unique_Page_Sidebars {
 				register_sidebar( $sidebar );
 			}
 		} else {
-			add_meta_box( 'ups-sidebar-no-sidebars', 'No sidebars', array( $this, 'no_sidebars' ), 'ups_sidebars', 'normal', 'default' );
+			add_meta_box( 'ups-sidebar-no-sidebars', __('No sidebars', self::TEXT_DOMAIN), array( $this, 'no_sidebars' ), 'ups_sidebars', 'normal', 'default' );
 		}
 
 		// Sidebar metaboxes
-		add_meta_box( 'ups-sidebar-add-new-sidebar', 'Add New Sidebar', array( $this, 'new_sidebar' ), 'ups_sidebars', 'side', 'default' );
-		add_meta_box( 'ups-sidebar-about-the-plugin', 'About the Plugin', array( $this, 'about' ), 'ups_sidebars', 'side', 'default' );
+		add_meta_box( 'ups-sidebar-add-new-sidebar', __('Add New Sidebar', self::TEXT_DOMAIN) , array( $this, 'new_sidebar' ), 'ups_sidebars', 'side', 'default' );
+		add_meta_box( 'ups-sidebar-about-the-plugin', __('About the Plugin', self::TEXT_DOMAIN) , array( $this, 'about' ), 'ups_sidebars', 'side', 'default' );
 	}
 
 	/**
 	 * Outputs error message when no sidebars have been added.
 	 */
 	public function no_sidebars() {
-		echo '<p>You haven&rsquo;t added any sidebars yet. Add one using the form on the right hand side!</p>';
+		echo '<p>'. y__('You haven&rsquo;t added any sidebars yet. Add one using the form on the right hand side!',self::TEXT_DOMAIN) .'</p>';
 	}
 
 	/**
@@ -133,11 +146,10 @@ class Unique_Page_Sidebars {
 			$_REQUEST['settings-updated'] = false;
 		?>
 		<div class="wrap">
-			<?php screen_icon(); ?><h2>Manage Sidebars</h2>
+			<?php screen_icon(); ?><h2><?php _e('Manage Sidebars', self::TEXT_DOMAIN) ?></h2>
 			<?php if ( false !== $_REQUEST['settings-updated'] ) : ?>
-			<div class="updated fade"><p><strong>Sidebar settings saved.</strong> You can now go manage the <a href="<?php echo get_admin_url(); ?>widgets.php">widgets</a> for your sidebars.</p></div>
+			<div class="updated fade"><p><strong><?php _e('Sidebar settings saved.', self::TEXT_DOMAIN) ?></strong> <?php printf( __('You can now go manage the <a href="%swidgets.php">widgets</a> for your sidebars.', self::TEXT_DOMAIN), get_admin_url()) ?></p></div>
 			<?php endif; ?>
-			<?php var_dump( array_pop( get_option( 'ups_sidebars' ) ) ); ?>
 			<div id="poststuff" class="metabox-holder has-right-sidebar">
 				<div id="post-body" class="has-sidebar">
 					<div id="post-body-content" class="has-sidebar-content">
@@ -165,12 +177,12 @@ class Unique_Page_Sidebars {
 
 		$options_fields = array(
 			'name' => 'Name',
-			'description' => 'Description',
-			'before_title' => 'Before Title',
-			'after_title' => 'After Title',
-			'before_widget' => 'Before Widget',
-			'after_widget' => 'After Widget',
-			'children' => 'Child Behavior'
+			'description' => __('Description', self::TEXT_DOMAIN),
+			'before_title' => __('Before Title', self::TEXT_DOMAIN),
+			'after_title' => __('After Title', self::TEXT_DOMAIN),
+			'before_widget' => __('Before Widget', self::TEXT_DOMAIN),
+			'after_widget' => __('After Widget', self::TEXT_DOMAIN),
+			'children' => __('Child Behavior', self::TEXT_DOMAIN),
 		);
 
 		$post_types = get_post_types( array( '_builtin' => false ), 'objects' );
@@ -252,7 +264,7 @@ class Unique_Page_Sidebars {
 						?>
 						<label>
 						<input type="checkbox" name="ups_sidebars[<?php echo esc_attr( $sidebar_id ); ?>][<?php echo esc_attr( $id ); ?>]" value="on" id="ups_sidebars[<?php echo esc_attr( $sidebar_id ); ?>][<?php echo esc_attr( $id ); ?>]"<?php echo $checked; ?> />
-						<span class="description">Set page children to use the parent page sidebar by default?</span>
+						<span class="description"><?php _e('Set page children to use the parent page sidebar by default?', self::TEXT_DOMAIN) ?></span>
 						</label>
 					<?php else : ?>
 						<input id="ups_sidebars[<?php echo esc_attr( $sidebar_id ); ?>][<?php echo esc_attr( $id ); ?>]" class="regular-text" type="text" name="ups_sidebars[<?php echo esc_attr( $sidebar_id ); ?>][<?php echo esc_attr( $id ); ?>]" value="<?php echo esc_html( $sidebar[$id] ); ?>" />
@@ -263,8 +275,8 @@ class Unique_Page_Sidebars {
 			</table>
 		</div>
 		<div class="clear submitbox">
-			<input type="submit" class="button-primary" value="Save all sidebars" />&nbsp;&nbsp;&nbsp;
-			<label><input type="checkbox" name="ups_sidebars[delete]" value="<?php echo esc_attr( $sidebar_id ); ?>" /> Delete this sidebar?</label>
+			<input type="submit" class="button-primary" value="<?php _e('Save all sidebars', self::TEXT_DOMAIN) ?>" />&nbsp;&nbsp;&nbsp;
+			<label><input type="checkbox" name="ups_sidebars[delete]" value="<?php echo esc_attr( $sidebar_id ); ?>" /> <?php _e('Delete this sidebar?', self::TEXT_DOMAIN) ?></label>
 		</div>
 		<?php
 	}
@@ -347,7 +359,7 @@ class Unique_Page_Sidebars {
 				</tr>
 			</table>
 			<p class="submit" style="padding: 0;">
-				<input type="submit" class="button-primary" value="Add Sidebar" />
+				<input type="submit" class="button-primary" value="<?php _e('Add Sidebar', self::TEXT_DOMAIN) ?>" />
 			</p>
 		</form>
 		<?php
@@ -358,9 +370,9 @@ class Unique_Page_Sidebars {
 	 */
 	public function about() {
 		?>
-		<p>This plugin was developed by <a href="http://andrewryno.com/">Andrew Ryno</a>, a WordPress developer based in Phoenix, AZ who never found a decent solution to having sidebars on different pages.</p>
-		<p>Like the plugin? Think it could be improved? Feel free to contribute over at <a href="http://github.com/andrewryno">GitHub</a>!</p>
-		<p>If you have any other feedback or need help, go ahead and <a href="http://andrewryno.com/plugins/unique-page-sidebars/">leave a comment</a>.</p>
+		<p><?php _e('This plugin was developed by <a href="http://andrewryno.com/">Andrew Ryno</a>, a WordPress developer based in Phoenix, AZ who never found a decent solution to having sidebars on different pages.', self::TEXT_DOMAIN) ?></p>
+		<p><?php _e('Like the plugin? Think it could be improved? Feel free to contribute over at <a href="http://github.com/andrewryno">GitHub</a>!', self::TEXT_DOMAIN) ?></p>
+		<p><?php _e('If you have any other feedback or need help, go ahead and <a href="http://andrewryno.com/plugins/unique-page-sidebars/">leave a comment</a>.', self::TEXT_DOMAIN) ?></p>
 		<?php
 	}
 

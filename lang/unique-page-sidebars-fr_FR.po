@@ -1,0 +1,147 @@
+# Copyright (C) 2013 Unique Page Sidebars
+# This file is distributed under the same license as the Unique Page Sidebars package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Unique Page Sidebars 0.3\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/unique-page-sidebars\n"
+"POT-Creation-Date: 2013-06-02 13:54:17+00:00\n"
+"PO-Revision-Date: 2013-06-02 16:05+0100\n"
+"Last-Translator: Loïc Gerbaud <info@loicg.net>\n"
+"Language-Team: LoïcG <info@loicg.net>\n"
+"Language: fr-FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"Plural-Forms: nplurals=2;plural=n>2;\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: .\n"
+
+#: unique-page-sidebars.php:86 unique-page-sidebars.php:87
+msgid "Manage Sidebars"
+msgstr "Gérer les barres latérales"
+
+#: unique-page-sidebars.php:126
+msgid "No sidebars"
+msgstr "Aucune barre latérale"
+
+#: unique-page-sidebars.php:130
+msgid "Add New Sidebar"
+msgstr "Ajouter une barre latérale"
+
+#: unique-page-sidebars.php:131
+msgid "About the Plugin"
+msgstr "A propos de l’extension"
+
+#: unique-page-sidebars.php:151
+msgid "Sidebar settings saved."
+msgstr "Paramètres de la barre latérale sauvegardés."
+
+#: unique-page-sidebars.php:151
+msgid ""
+"You can now go manage the <a href=\"%swidgets.php\">widgets</a> for your "
+"sidebars."
+msgstr ""
+"Vous pouvez maintenant modifier les <a href=\"%swidgets.php\">widgets</a> "
+"pour vos barres latérales."
+
+#: unique-page-sidebars.php:180
+msgid "Description"
+msgstr "Description"
+
+#: unique-page-sidebars.php:181
+msgid "Before Title"
+msgstr "Avant le titre"
+
+#: unique-page-sidebars.php:182
+msgid "After Title"
+msgstr "Après le titre"
+
+#: unique-page-sidebars.php:183
+msgid "Before Widget"
+msgstr "Avant le widget"
+
+#: unique-page-sidebars.php:184
+msgid "After Widget"
+msgstr "Après le widget"
+
+#: unique-page-sidebars.php:185
+msgid "Child Behavior"
+msgstr "Comportement de l'enfant"
+
+#: unique-page-sidebars.php:267
+msgid "Set page children to use the parent page sidebar by default?"
+msgstr "Utiliser la barre latérale du parent par défaut pour une page enfant ?"
+
+#: unique-page-sidebars.php:278
+msgid "Save all sidebars"
+msgstr "Enregistrer toutes les barres latérales"
+
+#: unique-page-sidebars.php:279
+msgid "Delete this sidebar?"
+msgstr "Supprimer cette barre latérale ?"
+
+#: unique-page-sidebars.php:362
+msgid "Add Sidebar"
+msgstr "Ajouter une barre latérale"
+
+#: unique-page-sidebars.php:373
+msgid ""
+"This plugin was developed by <a href=\"http://andrewryno.com/\">Andrew Ryno</"
+"a>, a WordPress developer based in Phoenix, AZ who never found a decent "
+"solution to having sidebars on different pages."
+msgstr ""
+"Cette extensions a été développée par <a href=\"http://andrewryno.com/"
+"\">Andrew Ryno</a>, un développeur WordPress basé à Phoenix (Arizona), quie "
+"n'a jamais trouvé de solution décente pour avoir différentes barres "
+"latérales sur différentes pages."
+
+#: unique-page-sidebars.php:374
+msgid ""
+"Like the plugin? Think it could be improved? Feel free to contribute over at "
+"<a href=\"http://github.com/andrewryno\">GitHub</a>!"
+msgstr ""
+"Vous aimez cette extension ? Vous pensez qu'elle pourrait être améliorée ? "
+"N'hésitez pas à contribuer sur la page <a href=\"http://github.com/andrewryno"
+"\">GitHub</a> !"
+
+#: unique-page-sidebars.php:375
+msgid ""
+"If you have any other feedback or need help, go ahead and <a href=\"http://"
+"andrewryno.com/plugins/unique-page-sidebars/\">leave a comment</a>."
+msgstr ""
+"Si vous avez d'autres commentaires, ou si vous avez besoin d'aide, allez sur "
+"<a href=\"http://andrewryno.com/plugins/unique-page-sidebars/\">la page de "
+"l'extension</a>.<br /> Version Française proposée par <a href=\"http://blog."
+"loicg.net/\">LoïcG</a>"
+
+#. Plugin Name of the plugin/theme
+msgid "Unique Page Sidebars"
+msgstr "Barres latérales uniques par page"
+
+#. Plugin URI of the plugin/theme
+msgid "http://andrewryno.com/plugins/page-specific-sidebars-widgets/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Allows for the creation of sidebars on a per-page basis all from a single "
+"dynamic_sidebar() call from where they should appear."
+msgstr ""
+"Permet la création de barres latérales (sidebars) unique pour chaque page, "
+"depuis un même appel de la fonction dynamic_sidebar()."
+
+#. Author of the plugin/theme
+msgid "Andrew Ryno"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://andrewryno.com/"
+msgstr ""
+
+#~ msgid ""
+#~ "You haven&rsquo;t added any sidebars yet. Add one using the form on the "
+#~ "right hand side!"
+#~ msgstr ""
+#~ "Vous n&rsquo;avez pas encore ajouté de barre latérale. Ajoutez-en une en "
+#~ "utilisant le formulaire situé sur la droite."
