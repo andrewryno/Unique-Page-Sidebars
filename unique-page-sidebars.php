@@ -12,7 +12,7 @@ Author URI: http://andrewryno.com/
 
 class Unique_Page_Sidebars {
 	const LANG_DIR = '/lang/'; // Defaut lang dirctory
-    const TEXT_DOMAIN = 'unique-page-sidebars';
+	const TEXT_DOMAIN = 'unique-page-sidebars';
 
 	/**
 	 * Register all hooks.
@@ -135,7 +135,7 @@ class Unique_Page_Sidebars {
 	 * Outputs error message when no sidebars have been added.
 	 */
 	public function no_sidebars() {
-		echo '<p>'. y__('You haven&rsquo;t added any sidebars yet. Add one using the form on the right hand side!',self::TEXT_DOMAIN) .'</p>';
+		echo '<p>'. __('You haven&rsquo;t added any sidebars yet. Add one using the form on the right hand side!',self::TEXT_DOMAIN) .'</p>';
 	}
 
 	/**
@@ -146,7 +146,7 @@ class Unique_Page_Sidebars {
 			$_REQUEST['settings-updated'] = false;
 		?>
 		<div class="wrap">
-			<?php screen_icon(); ?><h2><?php _e('Manage Sidebars', self::TEXT_DOMAIN) ?></h2>
+			<h2><?php _e('Manage Sidebars', self::TEXT_DOMAIN) ?></h2>
 			<?php if ( false !== $_REQUEST['settings-updated'] ) : ?>
 			<div class="updated fade"><p><strong><?php _e('Sidebar settings saved.', self::TEXT_DOMAIN) ?></strong> <?php printf( __('You can now go manage the <a href="%swidgets.php">widgets</a> for your sidebars.', self::TEXT_DOMAIN), get_admin_url()) ?></p></div>
 			<?php endif; ?>
@@ -286,7 +286,7 @@ class Unique_Page_Sidebars {
 	 */
 	public function validate( $input ) {
 		if ( isset( $input['add_sidebar'] ) ) {
-			$input = $this->add_sidebar();
+			$input = $this->add_sidebar( $input['add_sidebar'] );
 		}
 
 		if ( isset( $input['delete'] ) ) {
