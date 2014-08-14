@@ -49,6 +49,9 @@ class Unique_Page_Sidebars {
 
 	/**
 	 * Displays the sidebar which is attached to the page being viewed.
+	 *
+	 * @param string $default_sidebar
+	 * @return string
 	 */
 	public function display_sidebar( $default_sidebar ) {
 		global $post;
