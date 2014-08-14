@@ -59,7 +59,9 @@ class Unique_Page_Sidebars {
 			if ( ! isset( $sidebar['locations'] ) )
 				continue;
 
-			foreach ( $sidebar['locations'] as $location => $ids ) {
+			foreach ( $sidebar['locations'] as $location => $objects ) {
+				$ids = array_keys( $objects );
+
 				// Check to see if child posts should be displayed
 				if ( isset( $sidebar['children'] ) && $sidebar['children'] == 'on' ) {
 					$child = array_key_exists( $post->post_parent, $sidebar['pages'] );
